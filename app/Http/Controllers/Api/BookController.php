@@ -25,7 +25,7 @@ class BookController extends Controller
             'penulis' => 'required',
             'genre' => 'required',
             'status' => 'required',
-            'image' => 'nullable|image'
+            'image' => 'required|image|mimes:jpg,jpeg,png|max:2048'
         ]);
 
         $imageUrl = null;
