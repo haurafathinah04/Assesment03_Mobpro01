@@ -52,6 +52,36 @@ class BookController extends Controller
         ], 201);
     }
 
+    public function update(Request $request, Book $book)
+    {
+            // Pastikan hanya pemilik buku yang bisa edit
+        if ($book->user_id != $request->user()->id) {
+            return response()->json([
+                'message' => 'Forbidden'
+            ], 403);
+        }
+
+        $request->validate([
+            'judul' => 'required',
+            'penulis' => 'required',
+            'genre' => 'required',
+            'status' => 'required',
+        ]);
+
+        $book->update([
+            'judul' => $request->judul,
+            'penulis' => $request->penulis,
+            'genre' => $request->genre,
+            'status' => $request->status,
+        ]);
+
+        return response()->json([
+            'message' => 'Buku berhasil diperbarui',
+            'data' => $book,
+        ]);
+    }
+
+
     // Hapus buku
     public function destroy(Request $request, Book $book)
     {

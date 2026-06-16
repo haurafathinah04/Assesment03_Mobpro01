@@ -10,10 +10,12 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/logout', [AuthController::class, 'logout']);
-
     Route::get('/profile', [AuthController::class, 'profile']);
 
     Route::get('/books', [BookController::class, 'index']);
     Route::post('/books', [BookController::class, 'store']);
+
+    Route::put('/books/{book}', [BookController::class, 'update']);
+
     Route::delete('/books/{book}', [BookController::class, 'destroy']);
 });
