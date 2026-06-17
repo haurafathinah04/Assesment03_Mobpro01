@@ -25,14 +25,14 @@ class BookController extends Controller
             'penulis' => 'required',
             'genre' => 'required',
             'status' => 'required',
-            'image' => 'required|image|mimes:jpg,jpeg,png|max:2048'
+            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
         ]);
 
         $imageUrl = null;
 
         if ($request->hasFile('image')) {
             $path = $request->file('image')
-                            ->store('books', 'public');
+                ->store('books', 'public');
 
             $imageUrl = asset('storage/' . $path);
         }
@@ -54,7 +54,6 @@ class BookController extends Controller
 
     public function update(Request $request, Book $book)
     {
-            // Pastikan hanya pemilik buku yang bisa edit
         if ($book->user_id != $request->user()->id) {
             return response()->json([
                 'message' => 'Forbidden'
@@ -80,7 +79,6 @@ class BookController extends Controller
             'data' => $book,
         ]);
     }
-
 
     // Hapus buku
     public function destroy(Request $request, Book $book)
