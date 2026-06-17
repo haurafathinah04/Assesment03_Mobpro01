@@ -67,7 +67,6 @@ class BookController extends Controller
             'data' => $book,
         ]);
     }
-
     public function destroy(Book $book)
     {
         $book->delete();
