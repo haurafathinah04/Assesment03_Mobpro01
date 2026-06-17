@@ -9,12 +9,19 @@ class Book extends Model
 {
     use HasFactory;
 
+    // PASTIKAN user_id ADA DI DALAM SINI
     protected $fillable = [
-        'user_id',
-        'judul',
-        'penulis',
-        'genre',
-        'status',
-        'image_url',
+        'judul', 
+        'penulis', 
+        'genre', 
+        'status', 
+        'image_url', 
+        'user_id' 
     ];
+
+    // Opsional: Relasi ke tabel User
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
