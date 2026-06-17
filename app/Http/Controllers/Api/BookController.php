@@ -10,7 +10,9 @@ class BookController extends Controller
 {
     public function index()
     {
-        return Book::latest()->get();
+        return Book::where('user_id', auth()->id())
+            ->latest()
+            ->get();
     }
 
     public function store(Request $request)
