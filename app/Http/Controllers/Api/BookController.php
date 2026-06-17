@@ -8,16 +8,11 @@ use Illuminate\Http\Request;
 
 class BookController extends Controller
 {
-    // Ambil semua buku milik user login
-    public function index(Request $request)
+    public function index()
     {
-        return Book::where(
-            'user_id',
-            $request->user()->id
-        )->latest()->get();
+        return Book::latest()->get();
     }
 
-    // Tambah buku
     public function store(Request $request)
     {
         $request->validate([
@@ -38,7 +33,6 @@ class BookController extends Controller
         }
 
         $book = Book::create([
-            'user_id' => $request->user()->id,
             'judul' => $request->judul,
             'penulis' => $request->penulis,
             'genre' => $request->genre,
@@ -54,12 +48,6 @@ class BookController extends Controller
 
     public function update(Request $request, Book $book)
     {
-        if ($book->user_id != $request->user()->id) {
-            return response()->json([
-                'message' => 'Forbidden'
-            ], 403);
-        }
-
         $request->validate([
             'judul' => 'required',
             'penulis' => 'required',
@@ -80,15 +68,8 @@ class BookController extends Controller
         ]);
     }
 
-    // Hapus buku
-    public function destroy(Request $request, Book $book)
+    public function destroy(Book $book)
     {
-        if ($book->user_id != $request->user()->id) {
-            return response()->json([
-                'message' => 'Forbidden'
-            ], 403);
-        }
-
         $book->delete();
 
         return response()->json([
