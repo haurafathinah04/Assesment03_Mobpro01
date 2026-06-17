@@ -1,16 +1,24 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\BookController;
+use App\Http\Controllers\BookController;
 
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::get(
+    '/books',
+    [BookController::class,'index']
+);
 
-Route::post('/logout', [AuthController::class, 'logout']);
-Route::get('/profile', [AuthController::class, 'profile']);
+Route::post(
+    '/books',
+    [BookController::class,'store']
+);
 
-Route::get('/books', [BookController::class, 'index']);
-Route::post('/books', [BookController::class, 'store']);
-Route::put('/books/{book}', [BookController::class, 'update']);
-Route::delete('/books/{book}', [BookController::class, 'destroy']);
+Route::put(
+    '/books/{id}',
+    [BookController::class,'update']
+);
+
+Route::delete(
+    '/books/{id}',
+    [BookController::class,'destroy']
+);
